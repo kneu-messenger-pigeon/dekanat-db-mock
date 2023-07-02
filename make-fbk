@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# docker run --rm -v `pwd`:/workspace jacobalberty/firebird:v4.0 /workspace/make-fbk
+cd "$(dirname "$0")"
+export ISC_PASSWORD=test
+export FIREBIRD_DATABASE=dekanat.fdb
+
+/usr/local/firebird/docker-entrypoint.sh firebird &
+sleep 0.3
+NEXT_WAIT_TIME=0
+until nc -z 127.0.0.1 3050; do
+  sleep 0.3
+  NEXT_WAIT_TIME=$((NEXT_WAIT_TIME+1))
+  [ $NEXT_WAIT_TIME -eq 5 ] && echo "Firebird not started" && exit 10
+done
+
+"${PREFIX}/bin/isql" -u sysdba -p "$ISC_PASSWORD" "$FIREBIRD_DATABASE" -i dekanat.sql
+"${PREFIX}/bin/gbak" -b -user sysdba -password "$ISC_PASSWORD" "$FIREBIRD_DATABASE" dekanat.fbk
+ls -lah dekanat.fbk
+
+# docker run -it -p 3050:3050 --rm -e ISC_PASSWORD=test -e FIREBIRD_DATABASE=dekanat.fdb jacobalberty/firebird:v4.0
+# docker run -it -p 3050:3050 --rm -e ISC_PASSWORD=test  ghcr.io/kneu-messenger-pigeon/dekanat-db-mock:main
