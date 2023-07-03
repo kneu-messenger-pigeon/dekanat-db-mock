@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 # docker run --rm -v `pwd`:/workspace jacobalberty/firebird:v4.0 /workspace/make-fbk
+set -e
+
 cd "$(dirname "$0")"
 export ISC_PASSWORD=test
 export FIREBIRD_DATABASE=dekanat.fdb
