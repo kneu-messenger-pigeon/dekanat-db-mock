@@ -1,6 +1,9 @@
 FROM --platform=${BUILDPLATFORM:-linux/amd64} jacobalberty/firebird:v4.0 as builder
 
-COPY . /workspace
+COPY make-fbk /workspace/make-fbk
+COPY schema /workspace/schema
+RUN ls -la /workspace
+
 ENV FIREBIRD_BACKUP_FILE dekanat.fbk
 RUN /workspace/make-fbk
 
