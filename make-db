@@ -4,7 +4,6 @@ set -e
 cd "$(dirname "$0")"
 export ISC_PASSWORD=${ISC_PASSWORD:-test}
 export FIREBIRD_DATABASE=${FIREBIRD_DATABASE:-dekanat.fdb}
-export FIREBIRD_BACKUP_FILE="${FIREBIRD_BACKUP_FILE:-"dekanat.fbk"}"
 
 /usr/local/firebird/docker-entrypoint.sh firebird &
 sleep 0.5
@@ -20,6 +19,4 @@ for file in schema/*.sql; do
   echo "Done $file - exit code: $?"
 done
 
-"${PREFIX}/bin/gbak" -b -user sysdba -password "$ISC_PASSWORD" "$FIREBIRD_DATABASE" "$FIREBIRD_BACKUP_FILE"
-
-ls -lah "${FIREBIRD_BACKUP_FILE}"
+ls -lah "/firebird/data/$FIREBIRD_DATABASE"

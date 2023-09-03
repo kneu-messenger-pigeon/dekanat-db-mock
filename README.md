@@ -8,7 +8,7 @@ docker run -p 3050:3050 --name dekanat-db-mock --rm -e ISC_PASSWORD=test dekanat
 
 ### Debug make script
 ```shell
-docker run --name dekanat-db-mock --rm -v `pwd`:/workspace jacobalberty/firebird:v4.0 /workspace/make-fbk
+docker run --name dekanat-db-mock --rm -v `pwd`:/workspace jacobalberty/firebird:v4.0 /workspace/make-db
 ```
 
 ### Run firebird
