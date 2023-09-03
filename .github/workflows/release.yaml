@@ -13,4 +13,4 @@ jobs:
     uses: kneu-messenger-pigeon/github-workflows/.github/workflows/release.yaml@main
     secrets: inherit
     with:
-      skip_test: true
+      test-coverage-threshold: 0
